@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuu 20th Birthday Dinner Plan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Fonts: Playfair Display (Serif/Elegant) & Dancing Script (Script/Romantic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Dancing+Script:wght@400..700&family=Noto+Serif+JP:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Define custom colors and fonts based on request */
+        :root {
+            --color-ivory: #FFFFF0;
+            --color-soft-pink: #FBE8E8; 
+            --color-sakura-accent: #DA85A1; /* Deeper pink for contrast */
+            --color-gold-accent: #B8860B; /* Dark Goldenrod for visibility */
+            --color-text-dark: #333333;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-script: 'Noto Serif JP', serif;
+        }
+
+        /* Base styles */
+        body {
+            font-family: var(--font-serif);
+            background: radial-gradient(1200px 800px at 20% 10%, #fff8fb, transparent),
+                        radial-gradient(1000px 600px at 80% 20%, #fef6f6, transparent),
+                        linear-gradient(180deg, #f9f6ff 0%, #f7f9ff 50%, #fff 100%);
+            background-attachment: fixed;
+            animation: bg-breathe 12s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 14px 10px 30px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-kerning: normal;
+            font-variant-ligatures: common-ligatures discretionary-ligatures;
+        }
+
+        @keyframes bg-breathe {
+            0%, 100% { filter: saturate(1) brightness(1); }
+            50% { filter: saturate(1.05) brightness(1.03); }
+        }
+
+        /* Apple-style intro overlay */
+        .intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, #f9f6ff 0%, #f7f9ff 50%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 14px;
+            z-index: 50;
+        }
+        .intro-content { text-align: center; padding: 10px 24px; }
+        .intro-title {
+            font-family: var(--font-script);
+            color: var(--color-sakura-accent);
+            font-size: clamp(28px, 6vw, 48px);
+            letter-spacing: 0.04em;
+        }
+        .intro-fade-out { animation: introFade 420ms ease forwards; }
+        @keyframes introFade { to { opacity: 0; visibility: hidden; } }
+
+        
+
+        /* Floating Flowers (Petals) */
+        .petals-layer {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            top: -10vh;
+            width: var(--size, 16px);
+            height: var(--size, 16px);
+            background: radial-gradient(circle at 30% 30%, #fff 0 30%, #fbd5e3 32% 60%, transparent 62% 100%),
+                        radial-gradient(circle at 70% 70%, #fff 0 30%, #f7c0d6 32% 60%, transparent 62% 100%);
+            border-radius: 60% 40% 60% 40% / 60% 40% 60% 40%;
+            opacity: 0.7;
+            transform: translate3d(var(--x, 0px), -10vh, 0) rotate(var(--rot, 0deg));
+            animation:
+                fall var(--fall, 14s) linear var(--delay, 0s) infinite,
+                sway var(--sway, 5s) ease-in-out var(--delay, 0s) infinite,
+                spin var(--spin, 10s) linear var(--delay, 0s) infinite;
+            filter: drop-shadow(0 2px 2px rgba(218, 133, 161, 0.25));
+        }
+
+        @keyframes fall {
+            to { transform: translate3d(var(--x, 0px), 110vh, 0) rotate(var(--rot, 0deg)); }
+        }
+
+        @keyframes sway {
+            0%, 100% { margin-left: -12px; }
+            50% { margin-left: 12px; }
+        }
+
+        @keyframes spin {
+            to { rotate: 360deg; }
+        }
+
+        /* Invitation Card Wrapper - Simulates A4 vertical size */
+        .card-container {
+            width: 100%;
+            max-width: 640px; /* smaller page width */
+            min-height: auto; /* no forced A4 height */
+            background-color: var(--color-ivory);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 1.75rem; /* tighter padding */
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--color-soft-pink);
+            opacity: 0;
+            transform: translateY(8px) scale(0.992);
+            animation: card-fade-in 900ms ease-out 200ms forwards;
+        }
+
+        @keyframes card-fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Elegant Corner Floral/Sparkle Effect (Simulation) */
+        .card-container::before, .card-container::after, 
+        .card-container .corner-bl, .card-container .corner-br {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 100% 100%, transparent 20px, rgba(184, 134, 11, 0.08) 20px, rgba(251, 232, 232, 0.5) 100%);
+            opacity: 0.8;
+            z-index: 10;
+        }
+
+        .card-container::before {
+            top: -20px;
+            left: -20px;
+            transform: rotate(180deg);
+        }
+
+        .card-container::after {
+            top: -20px;
+            right: -20px;
+            transform: rotate(270deg);
+        }
+
+        .card-container .corner-bl {
+            bottom: -20px;
+            left: -20px;
+            transform: rotate(90deg);
+        }
+
+        .card-container .corner-br {
+            bottom: -20px;
+            right: -20px;
+        }
+
+        /* Custom Text Styles */
+        .script-header {
+            font-family: var(--font-script);
+            color: var(--color-gold-accent);
+            text-shadow: 0 0 5px rgba(184, 134, 11, 0.3);
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .main-title {
+            font-family: var(--font-script);
+            color: var(--color-sakura-accent);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+            font-variant-ligatures: common-ligatures;
+            font-feature-settings: "liga" 1, "clig" 1, "kern" 1, "onum" 1;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-gold-accent), transparent);
+            margin: 1.5rem 0;
+        }
+
+        .detail-label {
+            color: var(--color-sakura-accent);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .detail-content-jp {
+            font-family: 'Noto Serif JP', 'Cormorant Garamond', serif;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .course-list-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            text-align: left;
+            line-height: 1.6;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #EEDCE3;
+        }
+        .course-list-item:last-child {
+            border-bottom: none;
+        }
+        .course-item-name {
+            font-weight: 700;
+            color: var(--color-sakura-accent);
+            font-size: 0.95rem;
+            letter-spacing: 0.03em;
+            font-variant-ligatures: common-ligatures;
+        }
+
+        .special-note {
+            background-color: var(--color-soft-pink);
+            border-left: 5px solid var(--color-sakura-accent);
+            line-height: 1.8;
+            font-style: italic;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        /* Background image layer (behind all effects) */
+        .bg-image-layer {
+            position: fixed;
+            inset: 0;
+            background-image: url('photos/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.25; /* adjust for subtlety */
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        
+
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Background Image Layer -->
+    <div class="bg-image-layer" aria-hidden="true"></div>
+    </div>
+    <!-- Floating Flowers Layer -->
+    <div class="petals-layer" aria-hidden="true"></div>
+    <div class="card-container flex flex-col items-center text-center text-gray-800">
+        <!-- Corner decorations (pseudo-elements in CSS) -->
+        <div class="corner-bl"></div>
+        <div class="corner-br"></div>
+        
+        <!-- Header -->
+        <header class="w-full mb-8 pt-4">
+            <h1 class="main-title text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider">
+                Fuu 20th Birthday Dinner Plan
+            </h1>
+        </header>
+
+        <!-- Divider -->
+        <div class="gold-divider w-3/4"></div>
+
+        <!-- Details Section -->
+        <section class="details-section w-full max-w-sm mx-auto mb-10 text-xl">
+            <div class="mb-4">
+                <p class="detail-label text-2xl mb-1">店舗名</p>
+                <p class="detail-content-jp text-lg font-bold">ONO HAKATA -Octo Natura Kyusyu-</p>
+                <p class="text-sm text-gray-500">（ザ ロイヤルパークキャンバス福岡中洲）</p>
+            </div>
+            
+            <div class="mb-4">
+                <p class="detail-label text-2xl mb-1">来店日時</p>
+                <p class="detail-content-jp text-lg font-bold">2025年11月17日（月）18:00</p>
+            </div>
+            
+            <div>
+                <p class="detail-label text-2xl mb-1">ドレスコード</p>
+                <p class="detail-content-jp text-lg font-bold">Smart & Casual</p>
+                <p class="text-sm text-gray-500">（Color theme：服装の色決めたら教えてくださいね！ 🤍）</p>
+            </div>
+        </section>
+
+        <!-- Dinner Course Section -->
+        <section class="course-section w-full max-w-md mx-auto mb-10">
+            <h2 class="section-title text-3xl mb-4 p-2 bg-white rounded-lg inline-block border-b-2 border-dashed border-pink-200">
+                Dinner Course
+            </h2>
+            <p class="text-base mb-4 italic text-gray-600">乾杯ドリンク＆パティシエ特製ホールケーキ付き（全8品）</p>
+            
+            <ul class="list-none p-0">
+                <li class="course-list-item"><span class="course-item-name">① アミューズ<br> – Amuse –</span> <span>キャビア・フォアグラ・トリュフ</span></li>
+                <li class="course-list-item"><span class="course-item-name">② オードブル <br>– Hors-d’oeuvre –</span> <span>サーモン</span></li>
+                <li class="course-list-item"><span class="course-item-name">③ パン <br>– Pain –</span> <span>薪焼きソフトフランス ＆ 高千穂発酵<br>バター</span></li>
+                <li class="course-list-item"><span class="course-item-name">④ メイン <br>– Main –</span> <span>黒毛和牛サーロインの薪焼き</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑤ パスタ <br>– Pasta –</span> <span>熊本阿蘇自然豚ベーコンと旬野菜の<br>薪焼きパスタ</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑥ デザート <br>– Dessert –</span> <span>パティシエ特製ホールケーキ</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑦ カフェ <br>– Cafe –</span> <span>福岡八女中村園のハーブティー</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑧ ミニャルディーズ – Mignardies –</span><span>小さくて繊細なお菓子や一口サイズの<br>デザート</span></li>
+            </ul>
+        </section>
+
+        <!-- Separator -->
+        <div class="text-3xl tracking-widest text-gray-400 mb-8">⸻</div>
+
+        <!-- Special Note Section -->
+        <section class="special-note-section w-full max-w-lg mx-auto mb-10 p-5 rounded-xl shadow-inner">
+            <h2 class="section-title text-3xl mb-4">Special Note</h2>
+            <p class="special-note text-base md:text-lg text-gray-700 p-4 rounded-lg">
+                ミンと一緒に20歳の誕生日を祝う特別な夜を過ごしましょう！<br>
+                美味しい料理と温かな時間を、ふたりだけでゆっくりと。<br>
+                ふうのほっぺが痛くなるまで、笑顔が最高のデザートになりますように。
+            </p>
+        </section>
+        
+        <!-- Footer -->
+        <div class="text-xs text-gray-400 mt-4">
+            — End of Invitation —<br><br> All rights reserved to Min Thant Htin.<br> 2025 November.
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="background-music" src="music.mp3" preload="auto" loop></audio>
+
+    
+
+    <script>
+        (function () {
+            // Ensure start at top on load
+            try { window.scrollTo(0, 0); } catch (_) {}
+            // Floating flowers generation
+            const layer = document.querySelector('.petals-layer');
+            const rand = (min, max) => Math.random() * (max - min) + min;
+            if (layer) {
+                const PETAL_COUNT = 56;
+                for (let i = 0; i < PETAL_COUNT; i++) {
+                    const p = document.createElement('span');
+                    p.className = 'petal';
+                    const size = rand(10, 22);
+                    p.style.setProperty('--size', size + 'px');
+                    p.style.left = rand(-5, 100) + 'vw';
+                    p.style.setProperty('--x', rand(-40, 40) + 'px');
+                    p.style.setProperty('--rot', rand(0, 360) + 'deg');
+                    p.style.setProperty('--fall', rand(12, 20) + 's');
+                    p.style.setProperty('--sway', rand(4, 7) + 's');
+                    p.style.setProperty('--spin', rand(8, 16) + 's');
+                    p.style.setProperty('--delay', rand(-12, 0) + 's');
+                    layer.appendChild(p);
+                }
+            }
+
+            // Intro overlay (auto-dismiss, no button)
+            const intro = document.getElementById('intro');
+            const dismissIntro = () => {
+                if (!intro) return;
+                try { window.scrollTo(0, 0); } catch (_) {}
+                intro.classList.add('intro-fade-out');
+                setTimeout(() => { intro.remove(); }, 450);
+            };
+            if (intro) {
+                // auto fade after a brief moment
+                setTimeout(dismissIntro, 1200);
+                // also dismiss on any interaction
+                intro.addEventListener('click', dismissIntro);
+                window.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') dismissIntro(); }, { once: true });
+            }
+
+            // listeners attached per-photo above in spawnPhoto
+
+            // Background music
+            const audio = document.getElementById('background-music');
+            if (audio) {
+                audio.volume = 0.5;
+                const tryPlay = () => { audio.play().catch(() => {}); };
+                const onFirstGesture = () => {
+                    tryPlay();
+                    window.removeEventListener('click', onFirstGesture);
+                    window.removeEventListener('touchstart', onFirstGesture);
+                };
+                window.addEventListener('click', onFirstGesture, { once: true });
+                window.addEventListener('touchstart', onFirstGesture, { once: true });
+            }
+        })();
+    </script>
+</body>
+</html>
