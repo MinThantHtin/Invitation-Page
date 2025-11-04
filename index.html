@@ -11,6 +11,8 @@
     <style>
         /* Define custom colors and fonts based on request */
         :root {
+            --font-script: 'Dancing Script', cursive; /* or another script font */
+            --color-gold-accent: #b8860b; /* golden color */
             --color-ivory: #FFFFF0;
             --color-soft-pink: #FBE8E8; 
             --color-sakura-accent: #DA85A1; /* Deeper pink for contrast */
@@ -45,28 +47,72 @@
             50% { filter: saturate(1.05) brightness(1.03); }
         }
 
-        /* Apple-style intro overlay */
-        .intro-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(180deg, #f9f6ff 0%, #f7f9ff 50%, #ffffff 100%);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 14px;
-            z-index: 50;
-        }
-        .intro-content { text-align: center; padding: 10px 24px; }
-        .intro-title {
-            font-family: var(--font-script);
-            color: var(--color-sakura-accent);
-            font-size: clamp(28px, 6vw, 48px);
-            letter-spacing: 0.04em;
-        }
-        .intro-fade-out { animation: introFade 420ms ease forwards; }
-        @keyframes introFade { to { opacity: 0; visibility: hidden; } }
+        /* Disable scroll while intro is active */
+body.intro-active {
+  overflow: hidden;
+  height: 100vh; /* prevents mobile overscroll */
+}
 
-        
+    /* Intro Overlay (Apple-style) */
+#intro {
+  position: fixed;
+  inset: 0; /* top/right/bottom/left = 0 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical center */
+  align-items: center;     /* horizontal center */
+  background: linear-gradient(135deg, #fce4ec, #fff1f5);
+  font-family: var(--font-script);
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 1.8s ease, transform 2s ease, filter 2s ease;
+  text-align: center;
+  padding: 0 1rem; /* optional, for horizontal spacing on mobile */
+}
+    #intro.fade-out {
+      opacity: 0;
+      transform: scale(1.05);
+      filter: blur(4px);
+      pointer-events: none;
+    }
+
+    #intro h1 {
+  font-size: 2.5rem;
+  color: #b23a48;
+  opacity: 0;
+  animation: fadeInText 2s ease forwards;
+  text-align: center;
+}
+
+#intro p {
+  font-size: 1.1rem;
+  color: #8c4351;
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeInText 2s ease forwards;
+  animation-delay: 0.8s;
+  text-align: center;
+}
+
+/* Responsive text for small screens */
+@media (max-width: 480px) {
+  #intro h1 { font-size: 2rem; }
+  #intro p { font-size: 1rem; }
+}
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Main content fade-in */
+    #main-content {
+      opacity: 0;
+      transition: opacity 2.5s ease-in;
+    }
+    #main-content.show {
+      opacity: 1;
+    }
 
         /* Floating Flowers (Petals) */
         .petals-layer {
@@ -248,6 +294,11 @@
     </style>
 </head>
 <body class="antialiased">
+    <!-- Intro -->
+     <div id="intro">
+        <h1 class="script-header mb-2">Invitation for Birthday Dinner</h1>
+      <p>" Welcome to a night of elegance & joy ! "</p>
+    </div>
     <!-- Background Image Layer -->
     <div class="bg-image-layer" aria-hidden="true"></div>
     </div>
@@ -261,7 +312,7 @@
         <!-- Header -->
         <header class="w-full mb-8 pt-4">
             <h1 class="main-title text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider">
-                Fuu 20th Birthday Dinner Plan
+                Fuu's 20th Birthday Dinner Plan
             </h1>
         </header>
 
@@ -272,7 +323,7 @@
         <section class="details-section w-full max-w-sm mx-auto mb-10 text-xl">
             <div class="mb-4">
                 <p class="detail-label text-2xl mb-1">店舗名</p>
-                <p class="detail-content-jp text-lg font-bold">ONO HAKATA -Octo Natura Kyusyu-</p>
+                <p class="detail-content-jp text-lg font-bold">ONO HAKATA <br>-Octo Natura Kyusyu-</p>
                 <p class="text-sm text-gray-500">（ザ ロイヤルパークキャンバス福岡中洲）</p>
             </div>
             
@@ -284,7 +335,7 @@
             <div>
                 <p class="detail-label text-2xl mb-1">ドレスコード</p>
                 <p class="detail-content-jp text-lg font-bold">Smart & Casual</p>
-                <p class="text-sm text-gray-500">（Color theme：服装の色決めたら教えてくださいね！ 🤍）</p>
+                <p class="text-sm text-gray-500">（Color theme：服装の色決めたら<br>教えてくださいね！ 🤍）</p>
             </div>
         </section>
 
@@ -293,17 +344,17 @@
             <h2 class="section-title text-3xl mb-4 p-2 bg-white rounded-lg inline-block border-b-2 border-dashed border-pink-200">
                 Dinner Course
             </h2>
-            <p class="text-base mb-4 italic text-gray-600">乾杯ドリンク＆パティシエ特製ホールケーキ付き（全8品）</p>
+            <p class="text-base mb-4 italic text-gray-600">乾杯ドリンク＆パティシエ<br>特製ホールケーキ付き（全8品）</p>
             
             <ul class="list-none p-0">
-                <li class="course-list-item"><span class="course-item-name">① アミューズ<br> – Amuse –</span> <span>キャビア・フォアグラ・トリュフ</span></li>
-                <li class="course-list-item"><span class="course-item-name">② オードブル <br>– Hors-d’oeuvre –</span> <span>サーモン</span></li>
-                <li class="course-list-item"><span class="course-item-name">③ パン <br>– Pain –</span> <span>薪焼きソフトフランス ＆ 高千穂発酵<br>バター</span></li>
+                <li class="course-list-item"><span class="course-item-name">① アミューズ<br> – Amuse –</span> <span>キャビア・フォアグラ<br>・トリュフ</span></li>
+                <li class="course-list-item"><span class="course-item-name">② オードブル <br>– Hors d’oeuvre –</span> <span>サーモン</span></li>
+                <li class="course-list-item"><span class="course-item-name">③ パン <br>– Pain –</span> <span>薪焼きソフトフランス ＆ <br>高千穂発酵バター</span></li>
                 <li class="course-list-item"><span class="course-item-name">④ メイン <br>– Main –</span> <span>黒毛和牛サーロインの薪焼き</span></li>
-                <li class="course-list-item"><span class="course-item-name">⑤ パスタ <br>– Pasta –</span> <span>熊本阿蘇自然豚ベーコンと旬野菜の<br>薪焼きパスタ</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑤ パスタ <br>– Pasta –</span> <span>熊本阿蘇自然豚ベーコンと旬野菜の薪焼きパスタ</span></li>
                 <li class="course-list-item"><span class="course-item-name">⑥ デザート <br>– Dessert –</span> <span>パティシエ特製ホールケーキ</span></li>
-                <li class="course-list-item"><span class="course-item-name">⑦ カフェ <br>– Cafe –</span> <span>福岡八女中村園のハーブティー</span></li>
-                <li class="course-list-item"><span class="course-item-name">⑧ ミニャルディーズ – Mignardies –</span><span>小さくて繊細なお菓子や一口サイズの<br>デザート</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑦ カフェ <br>– Cafe –</span> <span>福岡八女中村園の<br>ハーブティー</span></li>
+                <li class="course-list-item"><span class="course-item-name">⑧ ミニャルディーズ <br>Mignardies</span><span>小さくて繊細なお菓子や一口サイズのデザート</span></li>
             </ul>
         </section>
 
@@ -316,7 +367,7 @@
             <p class="special-note text-base md:text-lg text-gray-700 p-4 rounded-lg">
                 ミンと一緒に20歳の誕生日を祝う特別な夜を過ごしましょう！<br>
                 美味しい料理と温かな時間を、ふたりだけでゆっくりと。<br>
-                ふうのほっぺが痛くなるまで、笑顔が最高のデザートになりますように。
+                ふうのほっぺが痛くなるまで、笑顔が最高のデートになりますように。
             </p>
         </section>
         
@@ -327,67 +378,91 @@
     </div>
 
     <!-- Background Music -->
-    <audio id="background-music" src="music.mp3" preload="auto" loop></audio>
-
-    
-
+    <audio id="background-music" src="bgmusic.mp3" preload="auto" loop></audio>
     <script>
-        (function () {
-            // Ensure start at top on load
-            try { window.scrollTo(0, 0); } catch (_) {}
-            // Floating flowers generation
-            const layer = document.querySelector('.petals-layer');
-            const rand = (min, max) => Math.random() * (max - min) + min;
-            if (layer) {
-                const PETAL_COUNT = 56;
-                for (let i = 0; i < PETAL_COUNT; i++) {
-                    const p = document.createElement('span');
-                    p.className = 'petal';
-                    const size = rand(10, 22);
-                    p.style.setProperty('--size', size + 'px');
-                    p.style.left = rand(-5, 100) + 'vw';
-                    p.style.setProperty('--x', rand(-40, 40) + 'px');
-                    p.style.setProperty('--rot', rand(0, 360) + 'deg');
-                    p.style.setProperty('--fall', rand(12, 20) + 's');
-                    p.style.setProperty('--sway', rand(4, 7) + 's');
-                    p.style.setProperty('--spin', rand(8, 16) + 's');
-                    p.style.setProperty('--delay', rand(-12, 0) + 's');
-                    layer.appendChild(p);
-                }
-            }
+        window.addEventListener('load', () => {
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main-content');
 
-            // Intro overlay (auto-dismiss, no button)
-            const intro = document.getElementById('intro');
-            const dismissIntro = () => {
-                if (!intro) return;
-                try { window.scrollTo(0, 0); } catch (_) {}
-                intro.classList.add('intro-fade-out');
-                setTimeout(() => { intro.remove(); }, 450);
-            };
-            if (intro) {
-                // auto fade after a brief moment
-                setTimeout(dismissIntro, 1200);
-                // also dismiss on any interaction
-                intro.addEventListener('click', dismissIntro);
-                window.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') dismissIntro(); }, { once: true });
-            }
+    // Prevent scrolling while intro is active
+    document.body.classList.add('intro-active');
 
-            // listeners attached per-photo above in spawnPhoto
+    // Fade out intro and fade in main
+    setTimeout(() => {
+        intro.classList.add('fade-out');
+        document.body.classList.remove('intro-active'); // re-enable scroll
+    }, 3500);
 
-            // Background music
-            const audio = document.getElementById('background-music');
-            if (audio) {
-                audio.volume = 0.5;
-                const tryPlay = () => { audio.play().catch(() => {}); };
-                const onFirstGesture = () => {
-                    tryPlay();
-                    window.removeEventListener('click', onFirstGesture);
-                    window.removeEventListener('touchstart', onFirstGesture);
-                };
-                window.addEventListener('click', onFirstGesture, { once: true });
-                window.addEventListener('touchstart', onFirstGesture, { once: true });
-            }
-        })();
+    setTimeout(() => main.classList.add('show'), 5200);
+
+      // Generate floating petals
+      const layer = document.querySelector('.petals-layer');
+      const rand = (min, max) => Math.random() * (max - min) + min;
+      for (let i = 0; i < 56; i++) {
+        const p = document.createElement('span');
+        p.className = 'petal';
+        p.style.setProperty('--size', rand(10, 22) + 'px');
+        p.style.left = rand(-5, 100) + 'vw';
+        p.style.setProperty('--x', rand(-40, 40) + 'px');
+        p.style.setProperty('--fall', rand(12, 20) + 's');
+        p.style.setProperty('--sway', rand(4, 7) + 's');
+        p.style.setProperty('--spin', rand(8, 16) + 's');
+        p.style.setProperty('--delay', rand(-12, 0) + 's');
+        layer.appendChild(p);
+      }
+
+      // Background music
+      const audio = document.getElementById('background-music');
+      if (audio) {
+        audio.volume = 0.5;
+        const playAudio = () => audio.play().catch(() => {});
+        window.addEventListener('click', playAudio, { once: true });
+        window.addEventListener('touchstart', playAudio, { once: true });
+      }
+    });
+
+    window.addEventListener('load', () => {
+  const audio = document.getElementById('background-music');
+  audio.volume = 0.1; // set volume
+
+  const playAudio = () => audio.play().catch(() => {});
+  
+  // Start audio on first user interaction
+  window.addEventListener('click', playAudio, { once: true });
+  window.addEventListener('touchstart', playAudio, { once: true });
+});
+
+window.addEventListener('load', () => {
+    const audio = document.getElementById('background-music');
+    const muteBtn = document.getElementById('mute-button');
+
+    // Set initial volume low
+    audio.volume = 0.2;
+    audio.muted = false;
+
+    // Play audio after first user interaction (required on mobile)
+    const playAudio = () => {
+        audio.play().catch(() => {
+            console.log('Audio playback blocked until user interaction');
+        });
+        window.removeEventListener('click', playAudio);
+        window.removeEventListener('touchstart', playAudio);
+    };
+
+    window.addEventListener('click', playAudio);
+    window.addEventListener('touchstart', playAudio);
+
+    // Mute/unmute toggle with icon only
+    muteBtn.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+    });
+});
+
     </script>
+
+<button id="mute-button" class="fixed top-4 right-4 bg-pink-200 px-3 py-2 rounded-full shadow z-50 text-xl">
+    🔊
+</button>
 </body>
 </html>
